@@ -1,0 +1,27 @@
+.body {
+  font-family: "Public Sans", sans-serif;
+}
+
+.navbar-brand {
+  margin-left: 30px;
+}
+
+.navbar-nav {
+  margin-right: 30px;
+}
+
+.homepage_house {
+  border-radius: 50%;
+}
+
+.home_paragraph {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.btn a {
+  text-decoration: none;
+  color: black;
+}

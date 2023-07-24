@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Propertopia</title>
+    <link rel="stylesheet" href="./styles/index.css" />
+
+    <!-- bootstrap cdn -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+      crossorigin="anonymous"
+    />
+    <!-- fontawesome cdn -->
+    <script
+      src="https://kit.fontawesome.com/99ab377561.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <!-- navbar -->
+    <nav class="navbar navbar-expand-lg bg-dark navbar-dark fixed-top">
+      <a href="#" class="navbar-brand"
+        >Propertopia <i class="fa-solid fa-house"></i
+      ></a>
+      <div class="collapse navbar-collapse" id="navmenu">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a href="#faq" class="nav-link">FAQ</a>
+          </li>
+          <li class="nav-item">
+            <a href="./pages/signup.html" class="nav-link">Sign Up</a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">Already a member?</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- showcase -->
+    <section class="bg-light text-dark pt-5 text-center">
+      <div class="container">
+        <div class="d-sm-flex">
+          <div class="home_paragraph">
+            <h1>Home <span class="text-warning">sweet</span> home</h1>
+            <p class="lead">
+              Discover Your Dream Home: Find Your Perfect Property with Us!
+            </p>
+            <button class="btn btn-warning btn-lg">
+              <a href="./signup.html">Start Now!</a>
+            </button>
+          </div>
+
+          <img
+            src="./images/home_sample.png"
+            class="homepage_house img-fluid w-50"
+            alt="house_image"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section class="p-5">
+      <div class="container">
+        <div class="row align-items-center justify-content-between">
+          <div class="col-md">
+            <img
+              src="./images/home_sample2.jpeg"
+              class="img-fluid"
+              alt="home_image"
+            />
+          </div>
+          <div class="col-md p-5">
+            <h2>Find Your Dream Home</h2>
+            <p>
+              Welcome to Propertopia, your one-stop destination to discover your
+              dream home. We understand that finding the perfect property is an
+              exciting journey, and we are here to make it effortless for you.
+              Whether you're looking for a cozy apartment, a family-friendly
+              house, or a luxurious estate, our extensive listings have got you
+              covered.
+            </p>
+            <p>
+              Our user-friendly search features allow you to filter through a
+              wide range of properties based on your preferences, from location
+              and price to amenities and more. Let us guide you in finding the
+              home that matches your unique lifestyle and aspirations.
+            </p>
+          </div>
+        </div>
+
+        <div class="row align-items-center justify-content-between">
+          <div class="col-md p-5">
+            <h2>Sell Your Property with Confidence</h2>
+            <p>
+              At Propertopia, we understand that selling your property is an
+              important decision, and we are here to support you every step of
+              the way. Our team of experienced real estate professionals is
+              dedicated to helping you achieve your goals and get the best value
+              for your property.
+            </p>
+            <p>
+              From expert market analysis and strategic marketing to connecting
+              you with qualified buyers, we employ cutting-edge techniques to
+              showcase your property's best features and attract potential
+              buyers. Our seamless selling process ensures that you have a
+              stress-free experience from listing to closing.
+            </p>
+            <p>
+              Put your trust in Propertopia, and let us help you navigate the
+              real estate market with confidence.
+            </p>
+          </div>
+          <div class="col-md">
+            <img
+              src="./images/home_sample3.jpeg"
+              class="img-fluid"
+              alt="home_image"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="p-5" id="faq">
+      <div class="container">
+        <h2 class="text-center mb-4">Frequently Asked Questions</h2>
+        <div class="accordion accordion-flush" id="questions">
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button
+                class="accordion-button collapsed"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#question-one"
+              >
+                Is it free to sign up and create an account on Propertopia?
+              </button>
+            </h2>
+            <div
+              id="question-one"
+              class="accordion-collapse collapse"
+              data-bs-parent="#questions"
+            >
+              <div class="accordion-body">
+                Yes, absolutely! Signing up and creating an account on
+                Propertopia is completely free. By registering,you can stay
+                updated with new listings that match your interests.
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button
+                class="accordion-button collapsed"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#question-two"
+              >
+                Can I list my property for sale on Propertopia?
+              </button>
+            </h2>
+            <div
+              id="question-two"
+              class="accordion-collapse collapse"
+              data-bs-parent="#questions"
+            >
+              <div class="accordion-body">
+                Absolutely! We welcome property owners and agents to list their
+                properties on Propertopia. Simply sign up as a seller, provide
+                the necessary property details, upload high-quality images, and
+                set an attractive price. Our platform will showcase your
+                property to potential buyers and help you find the right buyer
+                quickly.
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button
+                class="accordion-button collapsed"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#question-three"
+              >
+                Are the property listings up-to-date and accurate?
+              </button>
+            </h2>
+            <div
+              id="question-three"
+              class="accordion-collapse collapse"
+              data-bs-parent="#questions"
+            >
+              <div class="accordion-body">
+                We strive to keep our property listings as up-to-date and
+                accurate as possible. However, the availability of properties
+                can change quickly, and we rely on sellers and agents to provide
+                us with the latest information. We recommend reaching out to the
+                seller or agent directly to confirm the status of a property
+                before making any decisions.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- bootstrap cdn -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
