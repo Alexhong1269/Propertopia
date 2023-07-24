@@ -21,7 +21,14 @@
   flex-direction: column;
 }
 
-.btn a {
+.signup_section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.startnow {
   text-decoration: none;
-  color: black;
 }
