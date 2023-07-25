@@ -47,6 +47,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         die("Error: Last name cannot contain numbers or special characters.");
     }
 
+    // Hash the password using bcrypt algorithm
+    $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+
     // Prepare and execute the SQL query to create the table if it doesn't exist
     $sql = "CREATE TABLE IF NOT EXISTS USERS (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -63,7 +66,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Prepare and execute the SQL query to insert user data
     $stmt = $conn->prepare("INSERT INTO USERS (first_name, last_name, email, password) VALUES (?, ?, ?, ?)");
-    $stmt->bind_param("ssss", $first_name, $last_name, $email, $password);
+    $stmt->bind_param("ssss", $first_name, $last_name, $email, $hashed_password);
 
     if ($stmt->execute()) {
         // Data saved successfully, now redirect to the sign-in page
@@ -79,6 +82,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 // Close the database connection
 $conn->close();
 ?>
+
 
 
 
