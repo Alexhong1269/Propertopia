@@ -53,6 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($conn->query($insert_sql) === TRUE) {
         echo "Data inserted successfully.";
+        header("Location: ../signin.html");
     } else {
         echo "Error: " . $insert_sql . "<br>" . $conn->error;
     }
