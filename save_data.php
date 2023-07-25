@@ -42,11 +42,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         die("Error: First name cannot contain numbers or special characters.");
     }
 
+    // Additional validation for last name
+    if (containsNumbers($last_name) || containsSpecialChars($last_name)) {
+        die("Error: Last name cannot contain numbers or special characters.");
+    }
+
     // Prepare and execute the SQL query
     $sql = "INSERT INTO users (first_name, last_name, email, password) VALUES ('$first_name', '$last_name', '$email', '$password')";
 
     if ($conn->query($sql) === TRUE) {
-        echo "Data saved successfully!";
+        // Data saved successfully, now redirect to the sign-in page
+        header("Location: ./signin.html");
+        exit(); // Make sure to exit after the redirect
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
     }
@@ -55,3 +62,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 // Close the database connection
 $conn->close();
 ?>
+
+
