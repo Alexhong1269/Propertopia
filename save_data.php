@@ -47,20 +47,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         die("Error: Last name cannot contain numbers or special characters.");
     }
 
-    // Prepare and execute the SQL query
-    $sql = "INSERT INTO users (first_name, last_name, email, password) VALUES ('$first_name', '$last_name', '$email', '$password')";
+    // Prepare and execute the SQL query to create the table if it doesn't exist
+    $sql = "CREATE TABLE IF NOT EXISTS USERS (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        first_name VARCHAR(50) NOT NULL,
+        last_name VARCHAR(50) NOT NULL,
+        email VARCHAR(100) NOT NULL,
+        password VARCHAR(255) NOT NULL
+    )";
 
-    if ($conn->query($sql) === TRUE) {
+    if ($conn->query($sql) !== TRUE) {
+        echo "Error creating table: " . $conn->error;
+        exit();
+    }
+
+    // Prepare and execute the SQL query to insert user data
+    $stmt = $conn->prepare("INSERT INTO USERS (first_name, last_name, email, password) VALUES (?, ?, ?, ?)");
+    $stmt->bind_param("ssss", $first_name, $last_name, $email, $password);
+
+    if ($stmt->execute()) {
         // Data saved successfully, now redirect to the sign-in page
         header("Location: ./signin.html");
         exit(); // Make sure to exit after the redirect
     } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+        echo "Error: " . $stmt->error;
     }
+
+    $stmt->close();
 }
 
 // Close the database connection
 $conn->close();
 ?>
+
 
 
