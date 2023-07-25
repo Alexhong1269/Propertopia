@@ -47,7 +47,7 @@
       </div>
     </nav>
 
-    <!-- sign up form -->
+    <!-- sign in form -->
     <section class="signup_section">
       <div class="container mt-5 pt-5">
         <div class="row">
@@ -55,23 +55,29 @@
             <div class="card">
               <h2 class="text-center pt-5">Propertopia</h2>
               <div class="card-body">
-                <input
-                  type="email"
-                  name=""
-                  id=""
-                  class="form-control my-3 py-3"
-                  placeholder="Email Address"
-                />
-                <input
-                  type="password"
-                  name=""
-                  id=""
-                  class="form-control my-3 py-3"
-                  placeholder="Password"
-                />
-                <div class="text-center mt-3">
-                  <button class="btn btn-warning">Sign In</button>
-                </div>
+                <form method="post" action="database/signin.php">
+                  <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    class="form-control my-3 py-3"
+                    placeholder="Email Address"
+                    required
+                  />
+                  <input
+                    type="password"
+                    name="password"
+                    id="password"
+                    class="form-control my-3 py-3"
+                    placeholder="Password"
+                    required
+                  />
+                  <div class="text-center mt-3">
+                    <button class="btn btn-warning" type="submit">
+                      Sign In
+                    </button>
+                  </div>
+                </form>
               </div>
             </div>
           </div>
