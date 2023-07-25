@@ -41,53 +41,90 @@
       </div>
     </nav>
 
-  <!-- sign up form -->
-  <section class="signup_section">
-    <div class="container mt-5 pt-5">
-      <div class="row">
-        <div class="col-12 col-sm-8 col-md-6 m-auto">
-          <div class="card">
-            <h2 class="text-center pt-5">Propertopia</h2>
-            <i class="fa-solid fa-house text-center"></i>
-            <div class="card-body">
-              <!-- Add the form element and set the action attribute to the PHP script URL -->
-              <form action="save_data.php" method="post">
-                <input
-                  type="text"
-                  name="first_name" 
-                  class="form-control my-3 py-3"
-                  placeholder="First Name"
-                />
-                <input
-                  type="text"
-                  name="last_name" 
-                  class="form-control my-3 py-3"
-                  placeholder="Last Name"
-                />
-                <input
-                  type="email"
-                  name="email" 
-                  class="form-control my-3 py-3"
-                  placeholder="Email Address"
-                />
-                <input
-                  type="password"
-                  name="password" 
-                  class="form-control my-3 py-3"
-                  placeholder="Password"
-                />
-                <div class="text-center mt-3">
-                  <button type="submit" class="btn btn-warning">Sign Up</button>
-                  <a href="./signin.html" class="nav-link signup_account mt-2"
-                    >Already have an account?</a
-                  >
-                </div>
-              </form>
+    <!-- sign up form -->
+    <section class="signup_section">
+      <div class="container mt-5 pt-5">
+        <div class="row">
+          <div class="col-12 col-sm-8 col-md-6 m-auto">
+            <div class="card">
+              <h2 class="text-center pt-5">Propertopia</h2>
+              <i class="fa-solid fa-house text-center"></i>
+              <div class="card-body">
+                <!-- Add the form element and set the action attribute to the PHP script URL -->
+                <form action="save_data.php" method="post">
+                  <input
+                    type="text"
+                    name="first_name"
+                    class="form-control my-3 py-3"
+                    placeholder="First Name"
+                  />
+                  <input
+                    type="text"
+                    name="last_name"
+                    class="form-control my-3 py-3"
+                    placeholder="Last Name"
+                  />
+                  <input
+                    type="email"
+                    name="email"
+                    class="form-control my-3 py-3"
+                    placeholder="Email Address"
+                  />
+                  <input
+                    type="password"
+                    name="password"
+                    class="form-control my-3 py-3"
+                    placeholder="Password"
+                  />
+                  <div>
+                    <div class="mb-2">
+                      Please select your role in Propertopia:
+                    </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="user_option"
+                        id="admin"
+                      />
+                      <label class="form-check-label" for="admin">Admin</label>
+                    </div>
+
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="user_option"
+                        id="buyer"
+                      />
+                      <label class="form-check-label" for="buyer">Buyer</label>
+                    </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="user_option"
+                        id="seller"
+                        checked
+                      />
+                      <label class="form-check-label" for="seller">Seller</label>
+                    </div>
+                  </div>
+                  <!-- End of additional role selection options -->
+
+                  <div class="text-center mt-3">
+                    <button type="submit" class="btn btn-warning">Sign Up</button>
+                    <a href="./signin.html" class="nav-link signup_account mt-2"
+                      >Already have an account?</a
+                    >
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
-</body>
+    </section>
+  </body>
 </html>
+
