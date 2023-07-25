@@ -2,10 +2,10 @@
 // save_data.php
 
 // Assuming you have already set up the necessary MySQL credentials
-$host = 'localhost';
-$username = 'shong37';
-$password = 'shong37';
-$database = 'shong37';
+$host = "localhost";
+$username = "shong37";
+$password = "shong37";
+$database = "shong37";
 
 // Establish a connection to the MySQL database
 $conn = new mysqli($host, $username, $password, $database);
@@ -31,6 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $last_name = $_POST["last_name"];
     $email = $_POST["email"];
     $password = $_POST["password"];
+    $user_option = $_POST["user_option"]; // Get the selected user role
 
     // Simple form validation
     if (empty($first_name) || empty($last_name) || empty($email) || empty($password)) {
@@ -56,7 +57,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         first_name VARCHAR(50) NOT NULL,
         last_name VARCHAR(50) NOT NULL,
         email VARCHAR(100) NOT NULL,
-        password VARCHAR(255) NOT NULL
+        password VARCHAR(255) NOT NULL,
+        role VARCHAR(50) NOT NULL
     )";
 
     if ($conn->query($sql) !== TRUE) {
@@ -65,8 +67,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Prepare and execute the SQL query to insert user data
-    $stmt = $conn->prepare("INSERT INTO USERS (first_name, last_name, email, password) VALUES (?, ?, ?, ?)");
-    $stmt->bind_param("ssss", $first_name, $last_name, $email, $hashed_password);
+    $stmt = $conn->prepare("INSERT INTO USERS (first_name, last_name, email, password, role) VALUES (?, ?, ?, ?, ?)");
+    $stmt->bind_param("sssss", $first_name, $last_name, $email, $hashed_password, $user_option);
 
     if ($stmt->execute()) {
         // Data saved successfully, now redirect to the sign-in page
@@ -82,7 +84,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 // Close the database connection
 $conn->close();
 ?>
-
-
-
-
