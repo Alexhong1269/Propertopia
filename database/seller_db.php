@@ -2,6 +2,8 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 session_start();
+var_dump($_POST);
+var_dump($_FILES);
 
 // Database connection settings (replace with your actual details)
 $db_host = "localhost";
@@ -35,11 +37,12 @@ if ($result->num_rows == 1) {
         parking VARCHAR(100) NOT NULL,
         proximity_to_towns VARCHAR(100) NOT NULL,
         proximity_to_roads VARCHAR(100) NOT NULL,
+        image_filename VARCHAR(255),
         FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
     )";
 
     if ($conn->query($table_query) === TRUE) {
-        echo "Table users created successfully.";
+        echo "Table properties created successfully.";
     } else {
         echo "Error creating table: " . $conn->error;
     }
@@ -59,13 +62,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
     $proximity_to_towns = $_POST["proximity_to_towns"];
     $proximity_to_roads = $_POST["proximity_to_roads"];
 
+    // Handle image input
+    $target_dir = "../uploads/";
+    $target_file = $target_dir . basename($_FILES["image_file"]["name"]);
+    $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+
+    $check = getimagesize($_FILES["image_file"]["tmp_name"]);
+    if ($check === false) {
+        echo "File is not an image";
+        exit;
+    }
+    if (!in_array($imageFileType, array("jpg", "jpeg", "png", "gif"))) {
+        echo "Only JPG, JPEG, PNG, and GIF files are allowed";
+        exit;
+    }
+    if (move_uploaded_file($_FILES["image_file"]["tmp_name"], $target_file)) {
+        echo "Image uploaded successfully.";
+    } else {
+        echo "Error uploaidng image.";
+        exit;
+    }
+
+
     // Insert data into the database
-    $insert_query = "INSERT INTO properties (user_id, location, age, floor_plan, number_of_bedrooms, bathrooms, garden, parking, proximity_to_towns, proximity_to_roads)
-                     VALUES ('$user_id','$location', '$age', '$floor_plan', '$number_of_bedrooms', '$bathrooms', '$garden', '$parking', '$proximity_to_towns', '$proximity_to_roads')";
+    $image_filename = basename($_FILES["image_file"]["name"]);
+
+    $insert_query = "INSERT INTO properties (user_id, location, age, floor_plan, number_of_bedrooms, bathrooms, garden, parking, proximity_to_towns, proximity_to_roads, image_filename)
+                     VALUES ('$user_id','$location', '$age', '$floor_plan', '$number_of_bedrooms', '$bathrooms', '$garden', '$parking', '$proximity_to_towns', '$proximity_to_roads', '$image_filename')";
 
 
     if ($conn->query($insert_query) === TRUE) {
         echo "Data inserted successfully.";
+        header("Location: ./new_listing.html");
     } else {
         echo "Error: " . $insert_query . "<br>" . $conn->error;
     }

@@ -86,6 +86,30 @@ session_start();
             width: 800px;
         }
 
+        .card_modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            z-index: 9999;
+        }
+
+        .card_modal_content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            color: black;
+            width: 800px;
+        }
+
         form {
             display: flex;
             justify-content: flex-start;
@@ -106,6 +130,11 @@ session_start();
 
         #image_file {
             width: 152px;
+        }
+
+        .card_img {
+            width: 120px;
+            height: 120px;
         }
 
         .input_wrapper {
@@ -163,20 +192,70 @@ session_start();
             </div>
             <?php foreach ($propertiesData as $property): ?>
                 <div class="new_property_card">
-                    <h3>Location:
+                    <div>
+                        <img src="../uploads/<?php echo $property['image_filename'] ?>" alt="" class="card_img">
+                    </div>
+                    <p>Location:
                         <?php echo $property['location']; ?>
-                    </h3>
-                    <!-- Display other property details as desired -->
+                    </p>
+                    <p>Age:
+                        <?php echo $property['age']; ?>
+                    </p>
+                    <p>Floor plan:
+                        <?php echo $property['floor_plan']; ?>
+                    </p>
+                    <button data-property-id="<?php echo $property['id'] ?>" class="detail_open">Details</button>
+                </div>
+                <div id="card_modal_<?php echo $property['id'] ?>" class="card_modal">
+                    <div class="card_modal_content">
+                        <div>
+                            <img src="../uploads/<?php echo $property['image_filename'] ?>" alt="" class="card_img">
+                        </div>
+                        <p>Location:
+
+                            <?php echo $property['location']; ?>
+                        </p>
+                        <p>Age:
+                            <?php echo $property['age']; ?>
+                        </p>
+                        <p>Floor plan:
+                            <?php echo $property['floor_plan']; ?>
+                        </p>
+                        <p>Number of bedrooms:
+                            <?php echo $property['number_of_bedrooms']; ?>
+                        </p>
+                        <p>Number of bathrooms:
+                            <?php echo $property['bathrooms']; ?>
+                        </p>
+                        <p>
+                            Garden:
+                            <?php echo $property['garden']; ?>
+                        </p>
+                        <p>
+                            Parking:
+                            <?php echo $property['parking']; ?>
+                        </p>
+                        <p>
+                            Proximity to towns:
+                            <?php echo $property['proximity_to_towns']; ?>
+                        </p>
+                        <p>
+                            Proximity to roads:
+                            <?php echo $property['proximity_to_roads']; ?>
+                        </p>
+                        <button data-property-id="<?php echo $property['id'] ?>" class="detail_close">Close</button>
+
+                    </div>
                 </div>
             <?php endforeach; ?>
         </div>
         <div id="modal">
             <div class="modal-content">
 
-                <form method="POST" action="./seller_db.php" id="property_form">
+                <form method="POST" action="./seller_db.php" id="property_form" enctype="multipart/form-data">
                     <div class="input_wrapper">
                         <label for="image_file">Image: </label>
-                        <input type="file" id="image_file" name="filename">
+                        <input type="file" id="image_file" name="image_file">
                     </div>
                     <div class="input_wrapper">
                         <label for="location">Location:</label>
@@ -227,18 +306,39 @@ session_start();
 
             </div>
         </div>
+
     </div>
-
-
-
 
 
     <script>
         const add_icon = document.getElementById("add");
         const property_modal = document.getElementById("modal");
+        const detail_open_buttons = document.querySelectorAll('.detail_open');
+        const detail_close_buttons = document.querySelectorAll('.detail_close');
+        console.log(detail_open_buttons);
+        console.log(detail_close_buttons);
+
         add_icon.addEventListener("click", () => {
             property_modal.style.display = "block";
         });
+
+        detail_open_buttons.forEach(button => {
+            button.addEventListener("click", () => {
+                const propertyId = button.getAttribute("data-property-id");
+                const card_modal = document.getElementById(`card_modal_${propertyId}`);
+                console.log(propertyId);
+                card_modal.style.display = "block";
+            })
+        })
+
+        detail_close_buttons.forEach(button => {
+            button.addEventListener("click", () => {
+                const propertyId = button.getAttribute("data-property-id");
+                const card_modal = document.getElementById(`card_modal_${propertyId}`);
+                console.log(card_modal);
+                card_modal.style.display = "none";
+            })
+        })
     </script>
 
 </body>
