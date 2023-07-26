@@ -75,16 +75,20 @@
 
         label {
             display: inline-block;
-            width: 240px;
-            text-align: right;
+            width: 180px;
+            text-align: left;
         }
 
-        .input_wrapper {
-            margin: 3px;
+        input {
+            text-align: left;
         }
 
         #image_file {
-            margin-bottom: 30px;
+            width: 152px;
+        }
+
+        .input_wrapper {
+            margin: 3px auto;
         }
 
         #submit {
@@ -95,6 +99,7 @@
 
     <?php
     session_start();
+
     $username = $_SESSION['first_name'] . " " . $_SESSION['last_name'];
     echo "<h1>Welcome, {$username}!</h1>";
     ?>
@@ -109,9 +114,9 @@
         <div id="modal">
             <div class="modal-content">
 
-                <form method="POST" action="">
+                <form method="POST" action="./seller_db.php" id="property_form">
                     <div class="input_wrapper">
-                        <label for="image_file">Upload an image</label>
+                        <label for="image_file">Image: </label>
                         <input type="file" id="image_file" name="filename">
                     </div>
                     <div class="input_wrapper">
@@ -158,7 +163,7 @@
                         <label for="proximity_to_roads">Proximity to Roads:</label>
                         <input type="text" id="proximity_to_roads" name="proximity_to_roads" required>
                     </div>
-                    <input type="submit" name="submit" value="Submit" id="submit">
+                    <input type="submit" name="submit" value="submit" id="submit">
                 </form>
 
             </div>
@@ -170,7 +175,8 @@
 
         add_icon.addEventListener("click", () => {
             property_modal.style.display = "block";
-        })
+        });
+
     </script>
 </body>
 
