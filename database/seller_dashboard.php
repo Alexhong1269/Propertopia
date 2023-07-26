@@ -24,10 +24,16 @@ session_start();
             flex-wrap: wrap;
         }
 
+        .property_card {
+            background-color: #757D75;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
         .property_card,
         .new_property_card {
             padding: 20px;
-            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+            box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -37,9 +43,15 @@ session_start();
             height: 400px;
         }
 
-        h2 {
+        h1 {
             text-align: center;
+            margin-left: 10px;
+            background-color: #343a40;
+            color: white;
+            padding: 30px;
+            margin: 0;
         }
+
 
         #add {
             width: 40px;
@@ -110,7 +122,7 @@ session_start();
 
     $user_id = $_SESSION['user_id'];
     $username = $_SESSION['first_name'] . " " . $_SESSION['last_name'];
-    echo "<h1>Welcome, {$username}!</h1>";
+    echo "<h1>Welcome, <span>{$username}</span>!</h1>";
 
     $db_host = "localhost";
     $db_user = "wlee46"; // Replace with your database username
@@ -144,7 +156,6 @@ session_start();
 
     ?>
     <div class="container">
-        <h2>Dashboard</h2>
         <div class="card_container">
             <div class="property_card add_new">
                 <p>Register a new property</p>
