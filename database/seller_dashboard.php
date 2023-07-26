@@ -1,3 +1,9 @@
+<?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,18 +20,21 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            margin: 0 auto;
+            flex-wrap: wrap;
         }
 
-        .property_card {
-            padding: 30px;
+        .property_card,
+        .new_property_card {
+            padding: 20px;
             box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             margin: 30px;
-            width: 200px;
-            height: 300px;
+            width: 300px;
+            height: 400px;
         }
 
         h2 {
@@ -98,18 +107,57 @@
     </style>
 
     <?php
-    session_start();
 
+    $user_id = $_SESSION['user_id'];
     $username = $_SESSION['first_name'] . " " . $_SESSION['last_name'];
     echo "<h1>Welcome, {$username}!</h1>";
+
+    $db_host = "localhost";
+    $db_user = "wlee46"; // Replace with your database username
+    $db_pass = "wlee46"; // Replace with your database password
+    $db_name = "wlee46"; // Replace with your database name
+    
+    // Create a database connection
+    $conn = new mysqli($db_host, $db_user, $db_pass, $db_name);
+
+    // Check if the connection was successful
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    // function to retrieve property data from the db
+    function getPropertiesData($conn, $user_id)
+    {
+        $select_query = "SELECT * FROM properties WHERE user_id = $user_id";
+        $result = $conn->query($select_query);
+
+        $propertiesData = array();
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $propertiesData[] = $row;
+            }
+        }
+        return $propertiesData;
+    }
+    $propertiesData = getPropertiesData($conn, $user_id);
+
+
     ?>
     <div class="container">
-        <h2>Seller Dashboard</h2>
+        <h2>Dashboard</h2>
         <div class="card_container">
             <div class="property_card add_new">
                 <p>Register a new property</p>
                 <img src="../images/add_icon.png" id="add" alt="add_icon">
             </div>
+            <?php foreach ($propertiesData as $property): ?>
+                <div class="new_property_card">
+                    <h3>Location:
+                        <?php echo $property['location']; ?>
+                    </h3>
+                    <!-- Display other property details as desired -->
+                </div>
+            <?php endforeach; ?>
         </div>
         <div id="modal">
             <div class="modal-content">
@@ -169,15 +217,19 @@
             </div>
         </div>
     </div>
+
+
+
+
+
     <script>
         const add_icon = document.getElementById("add");
         const property_modal = document.getElementById("modal");
-
         add_icon.addEventListener("click", () => {
             property_modal.style.display = "block";
         });
-
     </script>
+
 </body>
 
 </html>
