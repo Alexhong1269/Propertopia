@@ -30,6 +30,11 @@ session_start();
             font-size: 1.2rem;
         }
 
+        .delete_card {
+            width: 30px;
+            height: 30px;
+        }
+
         .property_card,
         .new_property_card {
             padding: 20px;
@@ -191,7 +196,11 @@ session_start();
                 <img src="../images/add_icon.png" id="add" alt="add_icon">
             </div>
             <?php foreach ($propertiesData as $property): ?>
-                <div class="new_property_card">
+                <div class="new_property_card" id="card_<?php echo $property['id'] ?>">
+                    <div>
+                        <img data-property-id="<?php echo $property['id'] ?>" src="../images/delete_icon.png" alt=""
+                            class="delete_card">
+                    </div>
                     <div>
                         <img src="../uploads/<?php echo $property['image_filename'] ?>" alt="" class="card_img">
                     </div>
@@ -212,7 +221,6 @@ session_start();
                             <img src="../uploads/<?php echo $property['image_filename'] ?>" alt="" class="card_img">
                         </div>
                         <p>Location:
-
                             <?php echo $property['location']; ?>
                         </p>
                         <p>Age:
@@ -315,6 +323,8 @@ session_start();
         const property_modal = document.getElementById("modal");
         const detail_open_buttons = document.querySelectorAll('.detail_open');
         const detail_close_buttons = document.querySelectorAll('.detail_close');
+        const delete_card = document.querySelectorAll('.delete_card');
+
         console.log(detail_open_buttons);
         console.log(detail_close_buttons);
 
@@ -339,6 +349,28 @@ session_start();
                 card_modal.style.display = "none";
             })
         })
+
+        delete_card.forEach(icon => {
+            icon.addEventListener('click', () => {
+                const propertyId = icon.getAttribute("data-property-id");
+                const card = document.getElementById(`card_${propertyId}`);
+                card.style.display = "none";
+
+                const xhr = new XMLHttpRequest();
+                xhr.open("POST", "./seller_db.php");
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                xhr.onload = function () {
+                    if (xhr.status === 200) {
+                        location.reload();
+                    } else {
+                        alert("Error deleting the property.");
+                    }
+                };
+                xhr.send(`action=delete&property_id=${propertyId}`);
+            });
+        });
+
+
     </script>
 
 </body>

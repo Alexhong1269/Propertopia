@@ -48,6 +48,20 @@ if ($result->num_rows == 1) {
     }
 }
 
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["action"]) && $_POST["action"] === "delete") {
+    $propertyId = $_POST["property_id"];
+
+    // Delete the property from the database
+    $delete_query = "DELETE FROM properties WHERE id = $propertyId";
+    if ($conn->query($delete_query) === TRUE) {
+        echo "Property deleted successfully.";
+    } else {
+        echo "Error deleting property: " . $conn->error;
+    }
+
+    exit; // Prevent the rest of the code from executing when performing the deletion.
+}
+
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
     // Retrieve form data
@@ -99,6 +113,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
     }
 
 }
+
+
+
 
 $conn->close();
 ?>
