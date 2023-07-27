@@ -115,6 +115,70 @@ session_start();
             width: 800px;
         }
 
+        .edit_modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            z-index: 9999;
+        }
+
+        .edit_modal_content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            color: black;
+            width: 800px;
+        }
+
+        .detail_open {
+            background-color: #007bff;
+            color: white;
+            font-size: 14px;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background-color 0.2s ease-in-out;
+        }
+
+        .detail_close {
+            background-color: #007bff;
+            color: white;
+            font-size: 14px;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background-color 0.2s ease-in-out;
+        }
+
+        .detail_open:hover {
+            background-color: #0056b3;
+        }
+
+        .edit_button {
+            background-color: gray;
+            color: white;
+            font-size: 14px;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background-color 0.2s ease-in-out;
+        }
+
         form {
             display: flex;
             justify-content: flex-start;
@@ -214,6 +278,7 @@ session_start();
                         <?php echo $property['floor_plan']; ?>
                     </p>
                     <button data-property-id="<?php echo $property['id'] ?>" class="detail_open">Details</button>
+                    <button data-property-id="<?php echo $property['id'] ?>" class="edit_button">Edit</button>
                 </div>
                 <div id="card_modal_<?php echo $property['id'] ?>" class="card_modal">
                     <div class="card_modal_content">
@@ -258,9 +323,9 @@ session_start();
             <?php endforeach; ?>
         </div>
         <div id="modal">
-            <div class="modal-content">
-
+            <div class="modal-content" class="add_modal">
                 <form method="POST" action="./seller_db.php" id="property_form" enctype="multipart/form-data">
+                    <input type="hidden" name="action" value="add">
                     <div class="input_wrapper">
                         <label for="image_file">Image: </label>
                         <input type="file" id="image_file" name="image_file">
@@ -314,16 +379,78 @@ session_start();
 
             </div>
         </div>
+        <?php foreach ($propertiesData as $property): ?>
+            <div id="edit_modal_<?php echo $property['id'] ?>" class="edit_modal">
+                <div class="edit_modal_content" class="add_modal">
+                    <form method="POST" action="./seller_db.php" id="property_form" enctype="multipart/form-data">
+                        <input type="hidden" name="action" value="update">
+                        <input type="hidden" name="property_id" value="<?php echo $property['id'] ?>">
+                        <div class="input_wrapper">
+                            <label for="image_file">Image: </label>
+                            <input type="file" id="image_file_update" name="image_file">
+                        </div>
+                        <div class="input_wrapper">
+                            <label for="location">Location:</label>
+                            <input type="text" id="location_update" name="location" required>
+                        </div>
+                        <div class="input_wrapper">
+                            <label for="age">Age:</label>
+                            <input type="text" id="age_update" name="age" required>
+                        </div>
+
+                        <div class="input_wrapper">
+                            <label for="floor_plan">Floor Plan (in square feet):</label>
+                            <input type="number" id="floor_plan_update" name="floor_plan" required>
+                        </div>
+
+                        <div class="input_wrapper">
+                            <label for="number_of_bedrooms">Number of Bedrooms:</label>
+                            <input type="number" id="number_of_bedrooms_update" name="number_of_bedrooms" required>
+                        </div>
+
+
+                        <div class="input_wrapper">
+                            <label for="bathrooms">Number of Bathrooms:</label>
+                            <input type="number" id="bathrooms_update" name="bathrooms" required>
+                        </div>
+
+                        <div class="input_wrapper">
+                            <label for="garden">Garden:</label>
+                            <input type="checkbox" id="garden_update" name="garden">
+                        </div>
+
+
+                        <div class="input_wrapper">
+                            <label for="parking">Parking Availability:</label>
+                            <input type="text" id="parking_update" name="parking" required>
+                        </div>
+                        <div class="input_wrapper">
+                            <label for="proximity_to_towns">Proximity to Towns:</label>
+                            <input type="text" id="proximity_to_towns_update" name="proximity_to_towns" required>
+                        </div>
+
+                        <div class="input_wrapper">
+                            <label for="proximity_to_roads">Proximity to Roads:</label>
+                            <input type="text" id="proximity_to_roads_update" name="proximity_to_roads" required>
+                        </div>
+                        <input type="submit" name="submit" value="update" id="submit">
+                    </form>
+
+                </div>
+            </div>
+        <?php endforeach; ?>
 
     </div>
 
 
     <script>
+
         const add_icon = document.getElementById("add");
         const property_modal = document.getElementById("modal");
         const detail_open_buttons = document.querySelectorAll('.detail_open');
         const detail_close_buttons = document.querySelectorAll('.detail_close');
         const delete_card = document.querySelectorAll('.delete_card');
+        const edit_button = document.querySelectorAll('.edit_button');
 
         console.log(detail_open_buttons);
         console.log(detail_close_buttons);
@@ -336,7 +463,7 @@ session_start();
             button.addEventListener("click", () => {
                 const propertyId = button.getAttribute("data-property-id");
                 const card_modal = document.getElementById(`card_modal_${propertyId}`);
-                console.log(propertyId);
+                console.log(propertyId, "detail_open_btn");
                 card_modal.style.display = "block";
             })
         })
@@ -370,6 +497,53 @@ session_start();
             });
         });
 
+        edit_button.forEach(button => {
+            button.addEventListener('click', () => {
+                const propertyId = button.getAttribute("data-property-id");
+                console.log(propertyId, "edit_btn");
+                const edit_modal = document.getElementById(`edit_modal_${propertyId}`);
+                edit_modal.style.display = 'block';
+                const propertyData = <?php echo json_encode($propertiesData); ?>;
+                const currentProperty = propertyData.find(property => parseInt(property.id) === parseInt(propertyId));
+
+
+                const editForm = edit_modal.querySelector('form');
+                editForm.elements.location_update.value = currentProperty.location;
+                editForm.elements.age_update.value = currentProperty.age;
+                editForm.elements.floor_plan_update.value = currentProperty.floor_plan;
+                editForm.elements.number_of_bedrooms_update.value = currentProperty.number_of_bedrooms;
+                editForm.elements.bathrooms_update.value = currentProperty.bathrooms;
+                editForm.elements.garden_update.value = currentProperty.garden;
+                editForm.elements.parking_update.value = currentProperty.parking;
+                editForm.elements.proximity_to_towns_update.value = currentProperty.proximity_to_towns;
+                editForm.elements.proximity_to_roads_update.value = currentProperty.proximity_to_roads;
+
+
+                editForm.addEventListener('submit', (event) => {
+                    event.preventDefault();
+
+                    const formData = new FormData(editForm);
+
+                    formData.append('action', 'update');
+                    fetch('./seller_db.php', {
+                        method: 'POST',
+                        body: formData
+                    }).then(response => {
+                        if (response.status === 200) {
+                            // Reload the page to update the DOM with the new property data
+                            location.reload();
+                            console.log("ok");
+                        } else {
+                            alert("Error updating the property.");
+                        }
+                    }).catch(error => {
+                        alert("Error updating the property.");
+                        console.error(error);
+                    });
+                });
+
+            });
+        });
 
     </script>
 

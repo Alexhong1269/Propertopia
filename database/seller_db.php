@@ -48,6 +48,7 @@ if ($result->num_rows == 1) {
     }
 }
 
+
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["action"]) && $_POST["action"] === "delete") {
     $propertyId = $_POST["property_id"];
 
@@ -112,6 +113,51 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
         echo "Error: " . $insert_query . "<br>" . $conn->error;
     }
 
+}
+
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["action"]) && $_POST["action"] === "update") {
+    $propertyId = $_POST["property_id"];
+    // Retrieve form data for updating
+    $location = $_POST["location"];
+    $age = $_POST["age"];
+    $floor_plan = $_POST["floor_plan"];
+    $number_of_bedrooms = $_POST["number_of_bedrooms"];
+    $bathrooms = $_POST["bathrooms"];
+    $garden = isset($_POST["garden"]) ? 1 : 0;
+    $parking = $_POST["parking"];
+    $proximity_to_towns = $_POST["proximity_to_towns"];
+    $proximity_to_roads = $_POST["proximity_to_roads"];
+
+    // Check if the property ID exists in the database
+    $check_property_query = "SELECT id FROM properties WHERE id = $propertyId";
+    $result = $conn->query($check_property_query);
+
+    if ($result->num_rows != 1) {
+        echo "Property not found.";
+        exit;
+    }
+
+    // Update the property data in the database
+    $update_query = "UPDATE properties SET
+        location = '$location',
+        age = '$age',
+        floor_plan = '$floor_plan',
+        number_of_bedrooms = '$number_of_bedrooms',
+        bathrooms = '$bathrooms',
+        garden = '$garden',
+        parking = '$parking',
+        proximity_to_towns = '$proximity_to_towns',
+        proximity_to_roads = '$proximity_to_roads'
+        WHERE id = $propertyId";
+
+    if ($conn->query($update_query) === TRUE) {
+        echo "Property updated successfully.";
+    } else {
+        echo "Error updating property: " . $conn->error;
+    }
+
+    exit; // Prevent the rest of the code from executing when performing the update.
 }
 
 
