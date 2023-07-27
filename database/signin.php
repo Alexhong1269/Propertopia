@@ -1,4 +1,5 @@
 <?php
+session_start();
 // check_credentials.php
 
 // Assuming you have already set up the necessary MySQL credentials
@@ -41,6 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $user = $result->fetch_assoc();
         $hashedPassword = $user["password"];
 
+
         // Verify the password using password_verify function
         if (password_verify($password, $hashedPassword)) {
 
@@ -48,7 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             session_start();
             $_SESSION['first_name'] = $user['first_name'];
             $_SESSION['last_name'] = $user['last_name'];
-
+            $_SESSION['user_id'] = $user['id'];
             // Passwords match, user is authenticated
             if ($user['role'] === 'seller') {
                 header("Location: seller_dashboard.php");
